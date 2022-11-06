@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+}
+
+#container{
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid black;
+    border-radius: 10px;
+    width: 300px;
+    margin: auto;
+}
+
+input {
+    border-radius: 10px;
+    padding: 0;
+    height: 35px;
+    width: 280px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#operators {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+#buttons {
+    width: 210px;
+    flex-wrap: wrap;
+}
+
+.buttons{
+    background-color: gray;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+}
+
+.numberPad{
+    background-color: rgb(102, 102, 102);
+    padding: 20px;
+    color: white;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align:center;
+}
+
+.numberPad:hover {
+    background-color: rgb(71, 71, 71);
+}
