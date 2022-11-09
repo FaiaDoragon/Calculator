@@ -1,4 +1,4 @@
-
+//#region Sources
 
 const numberPad = [
     {
@@ -78,6 +78,9 @@ const operatorPad = [
     },
 ]
 
+//#endregion
+
+//#region construccion de elementos visuales
 const buttons = numberPad.map(function (numberPad) {
     return `
     <button 
@@ -103,6 +106,10 @@ function printNumbInput(number) {
     }
 }
 
+//#endregion
+
+//#region operaciones
+
 let accumulator = 0;
 let currentOperator = "";
 
@@ -116,13 +123,18 @@ function suma() {
             accumulator += resultado,
             input.value = ""
         );
-    }
+    } 
 }
 
 function resta() {
     let resultado = parseFloat(input.value)
     currentOperator = "-"
-    if (resultado != "") {
+    if (resultado != "" && accumulator == 0) {
+        return (
+            accumulator += resultado,
+            input.value = ""
+        );
+    } else if (resultado != "" && accumulator != 0) {
         return (
             accumulator -= resultado,
             input.value = ""
@@ -131,9 +143,14 @@ function resta() {
 }
 
 function mult() {
-    let resultado = parseFloat(input.value)
+    let resultado = parseInt(input.value)
     currentOperator = "*"
-    if (resultado != "") {
+    if (resultado != "" && accumulator == 0) {
+        return (
+            accumulator += resultado,
+            input.value = ""
+        );
+    } else if (resultado != "" && accumulator != 0) {
         return (
             accumulator *= resultado,
             input.value = ""
@@ -142,9 +159,14 @@ function mult() {
 }
 
 function div() {
-    let resultado = parseFloat(input.value)
+    let resultado = parseInt(input.value)
     currentOperator = "/"
-    if (resultado != "") {
+    if (resultado != "" && accumulator == 0) {
+        return (
+            accumulator += resultado,
+            input.value = ""
+        );
+    } else if (resultado != "" && accumulator != 0) {
         return (
             accumulator /= resultado,
             input.value = ""
@@ -162,6 +184,8 @@ function result() {
         currentOperator = "";
     }
 }
+
+//#endregion
 
 document.getElementById('buttons').innerHTML = (buttons.join(''))
 document.getElementById('operators').innerHTML = (operatorButtons.join(''))
