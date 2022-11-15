@@ -76,6 +76,11 @@ const operatorPad = [
         operator: '/',
         class: "numberPad"
     },
+    {
+        operation: "reset",
+        operator: 'c',
+        class: "numberPad"
+    },
 ]
 
 //#endregion
@@ -94,7 +99,7 @@ const buttons = numberPad.map(function (numberPad) {
 })
 
 const operatorButtons = operatorPad.map(function (operatorPad) {
-    return `<button onclick = ${operatorPad.operation}("${operatorPad.operator}") class='${operatorPad.class}'>${operatorPad.operator}</button>`
+    return `<button onclick = "${operatorPad.operation}()" class='${operatorPad.class}'>${operatorPad.operator}</button>`
 })
 
 function printNumbInput(number) {
@@ -123,40 +128,77 @@ function suma() {
             accumulator += resultado,
             input.value = ""
         );
-    } 
+    }
 }
 
 function resta() {
     let resultado = parseFloat(input.value)
-    currentOperator = "-"
-    if (resultado != "" && accumulator == 0) {
-        return (
-            accumulator += resultado,
-            input.value = ""
-        );
-    } else if (resultado != "" && accumulator != 0) {
-        return (
-            accumulator -= resultado,
-            input.value = ""
-        );
+    if (resultado != 0) {
+        if (accumulator == 0) {
+            if (currentOperator == "") {
+                return (
+                    accumulator += resultado,
+                    currentOperator = "-",
+                    input.value = ""
+                );
+            } else if (currentOperator == "-") {
+                return (
+                    accumulator -= resultado,
+                    input.value = ""
+                );
+            }
+        } else if (accumulator != 0) {
+            return (
+                accumulator -= resultado,
+                input.value = ""
+            );
+        }
+    } else if (resultado == 0) {
+        if (accumulator == 0) {
+            return (
+                currentOperator = "-",
+                input.value = ""
+            );
+        }
     }
 }
 
 function mult() {
     let resultado = parseInt(input.value)
-    currentOperator = "*"
-    if (resultado != "" && accumulator == 0) {
-        return (
-            accumulator += resultado,
-            input.value = ""
-        );
-    } else if (resultado != "" && accumulator != 0) {
-        return (
-            accumulator *= resultado,
-            input.value = ""
-        );
+    if (resultado != 0) {
+        if (accumulator == 0) {
+            if (currentOperator == "") {
+                return (
+                    accumulator += resultado,
+                    currentOperator = "*",
+                    input.value = ""
+                );
+            }
+        } else if (accumulator != 0) {
+            return (
+                accumulator *= resultado,
+                input.value = ""
+            );
+        }
+    } else if (resultado == 0) {
+        if (accumulator == 0) {
+            if (currentOperator == "") {
+                return (
+                    accumulator += resultado,
+                    currentOperator = "*",
+                    input.value = ""
+                );
+            }
+        } else if (accumulator != 0) {
+            return (
+                accumulator *= resultado,
+                currentOperator = "*",
+                input.value = ""
+            );
+        }
     }
 }
+
 
 function div() {
     let resultado = parseInt(input.value)
@@ -174,13 +216,26 @@ function div() {
     }
 }
 
+function reset() {
+    input.value = ""
+    accumulator = 0
+    currentOperator = ""
+}
+
 
 function result() {
-    if (currentOperator != "") {
-        operatorPad
-            .find((operatorPad) => operatorPad.operator === currentOperator)
-            .operationFunction()
+    if (input.value != "") {
+        if (currentOperator != "") {
+            operatorPad
+                .find((operatorPad) => operatorPad.operator === currentOperator)
+                .operationFunction()
+            input.value = accumulator;
+            currentOperator = "";
+            accumulator = 0;
+        }
+    } else if (input.value == "") {
         input.value = accumulator;
+        accumulator = 0;
         currentOperator = "";
     }
 }
@@ -189,6 +244,3 @@ function result() {
 
 document.getElementById('buttons').innerHTML = (buttons.join(''))
 document.getElementById('operators').innerHTML = (operatorButtons.join(''))
-
-
-
