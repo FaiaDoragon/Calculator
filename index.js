@@ -99,7 +99,7 @@ const buttons = numberPad.map(function (numberPad) {
 })
 
 const operatorButtons = operatorPad.map(function (operatorPad) {
-    return `<button onclick = "${operatorPad.operation}()" class='${operatorPad.class}'>${operatorPad.operator}</button>`
+    return `<button onclick = "${operatorPad.operation}()" onkeydown = "'${operatorPad.operator}', ${operatorPad.operation}()" class='${operatorPad.class}'>${operatorPad.operator}</button>`
 })
 
 function printNumbInput(number) {
@@ -111,14 +111,46 @@ function printNumbInput(number) {
     }
 }
 
+
+
 //#endregion
 
 //#region operaciones
 
 let accumulator = 0;
 let currentOperator = "";
-
 const input = document.getElementById('input')
+
+input.addEventListener('keydown', e => {
+    //console.log(e.key)
+    let operator = e.key
+
+    if (operator == "+") {
+        suma()
+    } else if (operator == "-") {
+        resta()
+    } else if (operator == "*") {
+        mult()
+    } else if (operator == "/") {
+        div()
+    } else if (operator == "Enter") {
+        result()
+    }
+})
+
+input.addEventListener('keyup', e => {
+    let operator = e.key
+    if (operator == "+") {
+        input.value = ""
+    } else if (operator == "-") {
+        input.value = ""
+    } else if (operator == "*") {
+        input.value = ""
+    } else if (operator == "/") {
+        input.value = ""
+    }
+})
+
 
 function suma() {
     let resultado = parseFloat(input.value)
