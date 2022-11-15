@@ -13,7 +13,7 @@ h1 {
     align-items: center;
     border: solid black;
     border-radius: 10px;
-    width: 300px;
+    width: 380px;
     margin: auto;
 }
 
@@ -21,15 +21,19 @@ input {
     border-radius: 10px;
     padding: 0;
     height: 35px;
-    width: 280px;
+    width: 350px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 
 #operators {
+    background-color: gray;
     display: flex;
     flex-direction: column;
     margin-left: 5px;
+    height: 280px;
+    flex-wrap: wrap;
+    width: 140px;
 }
 
 .buttons-container {
@@ -39,12 +43,13 @@ input {
 }
 
 #buttons {
+    background-color: gray;
     width: 210px;
+    height: auto;
     flex-wrap: wrap;
 }
 
 .buttons{
-    background-color: gray;
     display: flex;
     flex-direction: row;
     border-radius: 10px;

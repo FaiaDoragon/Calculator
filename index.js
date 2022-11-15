@@ -122,13 +122,20 @@ const input = document.getElementById('input')
 
 function suma() {
     let resultado = parseFloat(input.value)
-    currentOperator = "+"
-    if (resultado != "") {
+    if (resultado != 0) {
         return (
+            currentOperator = "+",
+            accumulator += resultado,
+            input.value = ""
+        );
+    } else if (resultado == 0) {
+        return (
+            currentOperator = "+",
             accumulator += resultado,
             input.value = ""
         );
     }
+
 }
 
 function resta() {
@@ -202,17 +209,37 @@ function mult() {
 
 function div() {
     let resultado = parseInt(input.value)
-    currentOperator = "/"
-    if (resultado != "" && accumulator == 0) {
-        return (
-            accumulator += resultado,
-            input.value = ""
-        );
-    } else if (resultado != "" && accumulator != 0) {
-        return (
-            accumulator /= resultado,
-            input.value = ""
-        );
+    if (resultado != 0) {
+        if (accumulator == 0) {
+            if (currentOperator == "") {
+                return (
+                    accumulator += resultado,
+                    currentOperator = "/",
+                    input.value = ""
+                );
+            }
+        } else if (accumulator != 0) {
+            return (
+                accumulator /= resultado,
+                input.value = ""
+            );
+        }
+    } else if (resultado == 0) {
+        if (accumulator == 0) {
+            if (currentOperator == "") {
+                return (
+                    accumulator += resultado,
+                    currentOperator = "/",
+                    input.value = ""
+                );
+            }
+        } else if (accumulator != 0) {
+            return (
+                accumulator /= resultado,
+                currentOperator = "/",
+                input.value = ""
+            );
+        }
     }
 }
 
