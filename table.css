@@ -1,0 +1,8 @@
+table {
+    display: flex;
+    justify-content: space-between;
+}
+
+table tr td {
+    border: solid;
+} 

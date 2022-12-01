@@ -1,3 +1,5 @@
+
+
 //#region Sources
 
 const numberPad = [
@@ -86,8 +88,10 @@ const operatorPad = [
 //#endregion
 
 //#region construccion de elementos visuales
+
 const buttons = numberPad.map(function (numberPad) {
-    return `
+    return(
+    `
     <button 
         ${!isNaN(numberPad.valor) ? `onclick = printNumbInput(${numberPad.valor})` : `onclick = printNumbInput("${(numberPad.valor)}")`}
         id = "${numberPad.valor}" 
@@ -95,14 +99,16 @@ const buttons = numberPad.map(function (numberPad) {
 
     ${numberPad.valor}
 
-    </button>`
+    </button>`)
 })
 
 const operatorButtons = operatorPad.map(function (operatorPad) {
-    return `<button onclick = "${operatorPad.operation}()" onkeydown = "'${operatorPad.operator}', ${operatorPad.operation}()" class='${operatorPad.class}'>${operatorPad.operator}</button>`
+    return `<button  onclick = "${operatorPad.operation}()" onkeydown = "'${operatorPad.operator}', ${operatorPad.operation}()" class='${operatorPad.class}'>${operatorPad.operator}</button>`
 })
 
-function printNumbInput(number) {
+
+
+function printNumbInput(number)  {
     if (number != "=") {
         let dato = document.getElementById("input")
         dato.value += number
@@ -115,11 +121,33 @@ function printNumbInput(number) {
 
 //#endregion
 
+//#region tabla y classes
+
+let tableData = []
+
+class Table {
+
+    constructor(currentOperator, amount, description, action) {
+        this._currentOperator = currentOperator;
+        this._amount = amount;
+        this._description = description;
+        this._action = action;
+    }
+}
+
+
+//document.getElementById("tabla").innerHTML = (tabla.join(''))
+
+//#endregion
+
 //#region operaciones
 
 let accumulator = 0;
 let currentOperator = "";
-const input = document.getElementById('input')
+const input = document.getElementById('input');
+
+
+
 
 input.addEventListener('keydown', e => {
     //console.log(e.key)
@@ -151,22 +179,60 @@ input.addEventListener('keyup', e => {
     }
 })
 
-
 function suma() {
-    let resultado = parseFloat(input.value)
+    let resultado = parseFloat(input.value);
+    //let aggElement = tableData.push(new Table(currentOperator, resultado,`<input />`, `<button>delete</button>`));
+//     const tablaElements = tableData.map(function (tableData) {
+//         return `
+//     <tr>
+//         <td>${tableData._currentOperator}</td>
+//         <td>${tableData._amount}</td>
+//         <td>${tableData._description}</td>
+//         <td>${tableData._action}</td>
+//     </tr>
+//     `
+// })
+
     if (resultado != 0) {
         return (
             currentOperator = "+",
             accumulator += resultado,
+            tableData.push(new Table(currentOperator, resultado,`<input />`, `<button>delete</button>`)),
+            console.log(tableData),
+            tablaElements = tableData.map(function (tableData) {
+                return `
+            <tr>
+                <td>${tableData._currentOperator}</td>
+                <td>${tableData._amount}</td>
+                <td>${tableData._description}</td>
+                <td>${tableData._action}</td>
+            </tr>
+            `
+        }),
+            document.getElementById("tabla").innerHTML = (tablaElements.join('')),
             input.value = ""
         );
     } else if (resultado == 0) {
         return (
             currentOperator = "+",
             accumulator += resultado,
+            tableData.push(new Table(currentOperator, resultado,`<input />`, `<button>delete</button>`)),
+            console.log(tableData),
+            tablaElements = tableData.map(function (tableData) {
+                return `
+            <tr>
+                <td>${tableData._currentOperator}</td>
+                <td>${tableData._amount}</td>
+                <td>${tableData._description}</td>
+                <td>${tableData._action}</td>
+            </tr>
+            `
+        }),
+            document.getElementById("tabla").innerHTML = (tablaElements.join('')),
             input.value = ""
         );
     }
+    
 
 }
 
@@ -177,18 +243,21 @@ function resta() {
             if (currentOperator == "") {
                 return (
                     accumulator += resultado,
+                    printInfoTable(),
                     currentOperator = "-",
                     input.value = ""
                 );
             } else if (currentOperator == "-") {
                 return (
                     accumulator -= resultado,
+                    printInfoTable(),
                     input.value = ""
                 );
             }
         } else if (accumulator != 0) {
             return (
                 accumulator -= resultado,
+                printInfoTable(),
                 input.value = ""
             );
         }
@@ -196,6 +265,7 @@ function resta() {
         if (accumulator == 0) {
             return (
                 currentOperator = "-",
+                printInfoTable(),
                 input.value = ""
             );
         }
@@ -297,6 +367,66 @@ function result() {
         accumulator = 0;
         currentOperator = "";
     }
+}
+
+//#endregion
+
+//#region Clases
+
+// class Tabla {
+//     constructor(simbol, amount, concept, action) {
+//         this._simbol = simbol;
+//         this._amount = amount;
+//         this._concept = concept;
+//         this._action = action;
+//     }
+//     suma(){}
+//     resta(){}
+//     mult(){}
+//     div(){}
+
+//     get simbol(){
+//         return this._simbol;
+//     }
+//     set simbol(nuevoSimbol){
+//         return this._simbol = nuevoSimbol;
+//     }
+// }
+
+// let table = new Tabla(currentOperator, '452', 'input', 'delete');
+
+// console.log(table.suma());
+//#endregion
+
+//#region tabla
+
+const taable = `
+
+<tr>
+    <td>Simbol</td>
+    <td>Amount</td>
+    <td>Concept</td>
+    <td>Action</td>
+</tr>
+`
+
+function printInfoTable() {
+    document.getElementById("table").innerHTML = `
+    <tr>
+        <td>Simbol</td>
+        <td>Amount</td>
+        <td>Concept</td>
+        <td>Action</td>
+    </tr>
+    <tr>
+        <td>${currentOperator}</td>
+        <td>${input.value}$</td>
+        <td><input /></td>
+        <td><button>Delete</button></td>
+    </tr>
+    `
+
+    
 }
 
 //#endregion
