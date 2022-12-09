@@ -1,4 +1,6 @@
-import { suma, resta, mult, div } from "../functions/functions.js";
+import { suma,resta,mult,div} from "../functions/functions.js";
+
+//array para los numeros
 
 export const numberPad = [
   {
@@ -50,6 +52,8 @@ export const numberPad = [
     class: "numberPad",
   },
 ];
+
+//array para las operaciones
 
 export const operatorPad = [
   {
