@@ -1,13 +1,13 @@
-import {operatorPad} from '../sources/sources.js'
+import { operatorPad } from "../sources/sources.js";
+import { Table } from "../class/Table.js";
 
 //variables goblales
-let tableData = []
+let tableData = [];
 let currentOperator = "";
 let accumulator = 0;
 
 // esta es la funcion para sumar los elemenots en el imput
 export function suma() {
-
   // variable que llama el dato del input
   let resultado = parseFloat(input.value);
 
@@ -23,7 +23,6 @@ export function suma() {
   );
 
   //  funcioon que crea la tabla; pasarla al archivo Table.js, importarla y llamarla como argumento
-
   const tablaElements = tableData.map(function (tableData) {
     return `
     <tr>
@@ -42,9 +41,9 @@ export function suma() {
       //establecemos la suma correspondiente del input = result, con la variable global accumulator
       (accumulator += resultado),
       // pusheamos los datos al array tableData
-      (aggElement),
+      aggElement,
       // creamos el segmento de la tabla con los datos correspondientes
-      (tablaElements),
+      tablaElements,
       (document.getElementById("tabla").innerHTML = tablaElements.join("")),
       //volvemos el input a ""
       (input.value = "")
@@ -53,8 +52,8 @@ export function suma() {
     return (
       (currentOperator = "+"),
       (accumulator += resultado),
-      (aggElement),
-      (tablaElements),
+      aggElement,
+      tablaElements,
       (document.getElementById("tabla").innerHTML = tablaElements.join("")),
       (input.value = "")
     );

@@ -1,4 +1,4 @@
-import { printNumbInput } from "../functions/functions.js";
+import { div, mult, printNumbInput, reset, resta, suma } from "../functions/functions.js";
 import { numberPad, operatorPad } from "../sources/sources.js";
 
 //creacion de los botones numericos del 1 al 0 ademas del "." y el "="
@@ -11,11 +11,10 @@ export const buttons = numberPad.map(function (numberPad) {
         </button>`;
 });
 
-// creacion de los botones que funcionan como operadores +, -, /, * 
+// creacion de los botones que funcionan como operadores +, -, /, *
 //falta que las funciones del archivo functions.js puedan ser llamadas desde estos botones
 export const operatorButtons = operatorPad.map(function (operatorPad) {
   return `<button 
-        onclick = "${operatorPad.operation}()" 
         onkeydown = "'${operatorPad.operator}', ${operatorPad.operation}()" 
         class='${operatorPad.class}'>
         ${operatorPad.operator}
@@ -24,7 +23,6 @@ export const operatorButtons = operatorPad.map(function (operatorPad) {
 
 //llamar a las funciones correspondientes al pulsar en el teclado +, -, / o *
 input.addEventListener("keydown", (e) => {
-  console.log(e.key);
   let operator = e.key;
   if (operator == "+") {
     suma();
@@ -53,3 +51,31 @@ input.addEventListener("keyup", (e) => {
   }
 });
 
+//al crearse los bottones dinamicamente no podemos añadirles directamente a cada uno un on click
+//asi que hacemos una delegacion de eventoss desde el elemento padre buttons
+
+const target = document.querySelector(".buttons");
+const targets = document.querySelector(".buttonsOperators");
+
+target.addEventListener('click', (e) => {
+  let number = e.target.innerText;
+  let className = e.target.className
+  if (className == 'numberPad') {
+    printNumbInput(number)
+  }
+});
+
+targets.addEventListener('click', (e) => {
+  let operator = e.target.innerText
+  if (operator == '+') {
+    suma()
+  } else if (operator == '-') {
+    resta()
+  } else if (operator == '*'){
+    mult()
+  } else if (operator == '/') {
+    div()
+  } else if (operator == 'c') {
+    reset()
+  }
+})
